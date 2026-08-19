@@ -3,3 +3,9 @@ variable "aws_region" {
     type        = string
     default     = "us-east-1"
 }
+
+variable "backup_retention_days" {
+    description = "Number of days to retain backups"
+    type        = number
+    default     = 14
+}
