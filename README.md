@@ -13,32 +13,6 @@ The repository currently contains the AWS provider configuration and a variable 
 - AWS credentials configured through the AWS CLI, environment variables, or another supported credential source
 - An existing S3 bucket named `mohit-kumar61-code-bucket` for the Terraform state backend
 
-## Usage
-
-Initialize the working directory:
-
-```bash
-terraform init
-```
-
-Review the configuration:
-
-```bash
-terraform plan
-```
-
-Apply the configuration after backup resources have been added to `Backup.tf`:
-
-```bash
-terraform apply
-```
-
-The AWS region defaults to `us-east-1`. Override it when needed:
-
-```bash
-terraform plan -var="aws_region=us-west-2"
-```
-
 ## Files
 
 - `Backup.tf` - Backup resource definitions.
