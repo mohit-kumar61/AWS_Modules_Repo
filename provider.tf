@@ -5,6 +5,11 @@ terraform{
             version = "~>6.0"
         }
     }
+    backend "s3" {
+        bucket = "mohit-kumar61-code-bucket"
+        key    = "terraform.tfstate"
+        region = var.aws_region
+    }
 }
 
 provider "aws" {
