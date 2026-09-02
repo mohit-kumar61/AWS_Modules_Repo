@@ -27,7 +27,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.name}-vpc"
+    Name = "${var.name}"
   }
 }
 
@@ -40,7 +40,7 @@ resource "aws_subnet" "main" {
   availability_zone = local.subnet_to_az[count.index]
 
   tags = {
-    Name = "${var.name}-subnet-${count.index + 1}"
+    Name = "${var.name}-${count.index + 1}"
     Type = "Subnet"
   }
 }
