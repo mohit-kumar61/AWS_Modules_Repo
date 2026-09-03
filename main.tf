@@ -80,3 +80,19 @@ module "backup" {
   backup_tag_key    = var.backup_tag_key
   backup_tag_value  = var.backup_tag_value
 }
+
+# ---------------------------------------------------------------------------
+#                            EC2 Module
+# ---------------------------------------------------------------------------
+
+module "ec2" {
+  count  = var.enable_ec2 ? 1 : 0
+  source = "./modules/ec2"
+
+  instance_type = var.ec2_instance_type
+  server_count  = var.ec2_server_count
+  key_name      = var.ec2_key_name
+  volume_size   = var.ec2_volume_size
+  volume_type   = var.ec2_volume_type
+  os_type       = var.ec2_os_type
+}

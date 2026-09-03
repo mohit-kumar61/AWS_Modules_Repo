@@ -152,3 +152,75 @@ variable "retention_days" {
 
 ##########################################################################################
 
+variable "enable_ec2" {
+  description = "Enable the EC2 module."
+  type        = bool
+  default     = false
+}
+
+variable "ec2_instance_type" {
+  description = "EC2 instance type."
+  type        = string
+  default     = "t3.micro"
+
+  validation {
+    condition     = length(trimspace(var.ec2_instance_type)) > 0
+    error_message = "ec2_instance_type must not be empty."
+  }
+}
+
+variable "ec2_server_count" {
+  description = "Number of EC2 instances to launch."
+  type        = number
+  default     = 1
+
+  validation {
+    condition     = var.ec2_server_count >= 1 && floor(var.ec2_server_count) == var.ec2_server_count
+    error_message = "ec2_server_count must be a whole number greater than or equal to one."
+  }
+}
+
+variable "ec2_key_name" {
+  description = "Name of the generated EC2 key pair."
+  type        = string
+  default     = "ec2-key"
+
+  validation {
+    condition     = length(trimspace(var.ec2_key_name)) > 0
+    error_message = "ec2_key_name must not be empty."
+  }
+}
+
+variable "ec2_volume_size" {
+  description = "EC2 root EBS volume size in GiB."
+  type        = number
+  default     = 100
+
+  validation {
+    condition     = var.ec2_volume_size > 0
+    error_message = "ec2_volume_size must be greater than zero."
+  }
+}
+
+variable "ec2_volume_type" {
+  description = "EC2 root EBS volume type."
+  type        = string
+  default     = "gp3"
+
+  validation {
+    condition     = contains(["gp2", "gp3", "io1", "io2", "sc1", "st1", "standard"], var.ec2_volume_type)
+    error_message = "ec2_volume_type must be a supported EBS volume type."
+  }
+}
+
+variable "ec2_os_type" {
+  description = "EC2 operating system: linux, ubuntu, or windows."
+  type        = string
+  default     = "amazon_linux"
+
+  validation {
+    condition     = contains(["linux", "amazon_linux", "ubuntu", "windows"], var.ec2_os_type)
+    error_message = "ec2_os_type must be linux, amazon_linux, ubuntu, or windows."
+  }
+}
+
