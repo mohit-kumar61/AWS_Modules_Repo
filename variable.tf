@@ -27,6 +27,12 @@ variable "internal_private_subnet_count" {
   }
 }
 
+variable "internal_subnet_cidrs" {
+  description = "Optional Internal VPC subnet CIDRs in public-then-private order."
+  type        = list(string)
+  default     = []
+}
+
 ##########################################################################################
 
 variable "enable_dmz_vpc" {
@@ -51,6 +57,11 @@ variable "dmz_public_subnet_count" {
     error_message = "dmz_public_subnet_count must be zero or greater."
   }
 }
+variable "dmz_subnet_cidrs" {
+  description = "Optional DMZ VPC subnet CIDRs."
+  type        = list(string)
+  default     = []
+}
 
 #######################################################################################
 
@@ -66,6 +77,49 @@ variable "standalone_vpc_cidr" {
   default     = "10.1.0.0/16"
 }
 
+variable "standalone_subnet_cidrs" {
+  description = "Optional standalone VPC subnet CIDRs in public-then-private order."
+  type        = list(string)
+  default     = []
+}
+
+variable "standalone_public_subnet_count" {
+  description = "Number of public subnets in the standalone VPC."
+  type        = number
+  default     = 1
+
+  validation {
+    condition     = var.standalone_public_subnet_count >= 0
+    error_message = "standalone_public_subnet_count must be zero or greater."
+  }
+}
+
+variable "standalone_private_subnet_count" {
+  description = "Number of private subnets in the standalone VPC."
+  type        = number
+  default     = 2
+
+  validation {
+    condition     = var.standalone_private_subnet_count >= 0
+    error_message = "standalone_private_subnet_count must be zero or greater."
+  }
+}
+
+##########################################################################################
+
+variable "enable_vpc_peering" {
+  description = "Create peering between the enabled Internal and DMZ VPCs."
+  type        = bool
+  default     = false
+}
+
+variable "auto_accept_vpc_peering" {
+  description = "Automatically accept the VPC peering connection."
+  type        = bool
+  default     = false
+}
+
+##########################################################################################
 variable "enable_backup" {
   description = "Enable or disable Backup module deployment"
   type        = bool
@@ -96,55 +150,5 @@ variable "retention_days" {
   default     = 14
 }
 
+##########################################################################################
 
-variable "standalone_public_subnet_count" {
-  description = "Number of public subnets in the standalone VPC."
-  type        = number
-  default     = 1
-
-  validation {
-    condition     = var.standalone_public_subnet_count >= 0
-    error_message = "standalone_public_subnet_count must be zero or greater."
-  }
-}
-
-variable "standalone_private_subnet_count" {
-  description = "Number of private subnets in the standalone VPC."
-  type        = number
-  default     = 2
-
-  validation {
-    condition     = var.standalone_private_subnet_count >= 0
-    error_message = "standalone_private_subnet_count must be zero or greater."
-  }
-}
-
-variable "internal_subnet_cidrs" {
-  description = "Optional Internal VPC subnet CIDRs in public-then-private order."
-  type        = list(string)
-  default     = []
-}
-
-variable "dmz_subnet_cidrs" {
-  description = "Optional DMZ VPC subnet CIDRs."
-  type        = list(string)
-  default     = []
-}
-
-variable "standalone_subnet_cidrs" {
-  description = "Optional standalone VPC subnet CIDRs in public-then-private order."
-  type        = list(string)
-  default     = []
-}
-
-variable "enable_vpc_peering" {
-  description = "Create peering between the enabled Internal and DMZ VPCs."
-  type        = bool
-  default     = false
-}
-
-variable "auto_accept_vpc_peering" {
-  description = "Automatically accept the VPC peering connection."
-  type        = bool
-  default     = false
-}

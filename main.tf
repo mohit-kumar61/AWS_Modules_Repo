@@ -31,7 +31,7 @@ module "standalone_vpc" {
   count  = var.enable_standalone_vpc ? 1 : 0
   source = "./modules/vpc"
 
-  name                    = "Standalone"
+  name                    = "VPC"
   subnet_name_style       = "type"
   vpc_cidr                = var.standalone_vpc_cidr
   public_subnet_count    = var.standalone_public_subnet_count
