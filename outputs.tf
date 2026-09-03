@@ -3,23 +3,38 @@
 # ---------------------------------------------------------------------------
 
 output "vpc_id" {
-  description = "The ID of the VPC"
-  value       = try(module.vpc[0].vpc_id, null)
+  description = "The standalone VPC ID, or null in separate mode"
+  value       = try(module.standalone_vpc[0].vpc_id, null)
 }
 
 output "vpc_cidr" {
-  description = "The CIDR block of the VPC"
-  value       = try(module.vpc[0].vpc_cidr, null)
+  description = "The standalone VPC CIDR, or null in separate mode"
+  value       = try(module.standalone_vpc[0].vpc_cidr, null)
 }
 
 output "subnet_ids" {
-  description = "List of subnet IDs created in the VPC"
-  value       = try(module.vpc[0].subnet_ids, [])
+  description = "Standalone VPC subnet IDs, or an empty list in separate mode"
+  value       = try(module.standalone_vpc[0].subnet_ids, [])
 }
 
 output "availability_zones" {
-  description = "List of availability zones used"
-  value       = try(module.vpc[0].availability_zones, [])
+  description = "Standalone VPC availability zones, or an empty list in separate mode"
+  value       = try(module.standalone_vpc[0].availability_zones, [])
+}
+
+output "internal_vpc_id" {
+  description = "The Internal VPC ID in separate mode"
+  value       = try(module.internal_vpc[0].vpc_id, null)
+}
+
+output "dmz_vpc_id" {
+  description = "The DMZ VPC ID in separate mode"
+  value       = try(module.dmz_vpc[0].vpc_id, null)
+}
+
+output "vpc_peering_id" {
+  description = "The Internal-to-DMZ peering connection ID"
+  value       = try(aws_vpc_peering_connection.internal_dmz[0].id, null)
 }
 
 # ---------------------------------------------------------------------------
